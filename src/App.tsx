@@ -1,17 +1,38 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+// --- TIPE DATA (Agar tidak error di TypeScript) ---
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  image: string;
+  category?: { name: string };
+}
+
+interface CartItem extends Product {
+  qty: number;
+}
+
 function App() {
+  // --- KONFIGURASI API (Vercel) ---
+  const API_URL = 'https://server-pos-blue.vercel.app/api';
+
   // --- STATE (Variable Data) ---
-  const [products, setProducts] = useState([]) 
-  const [cart, setCart] = useState([])         
+  const [products, setProducts] = useState<Product[]>([]) 
+  const [cart, setCart] = useState<CartItem[]>([])        
   const [loading, setLoading] = useState(true) 
 
-  // --- FUNGSI 1: Ambil Data dari Laravel ---
+  // --- FUNGSI 1: Ambil Data dari Laravel Vercel ---
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/products')
-      setProducts(response.data.data)
+      const response = await axios.get(`${API_URL}/products`)
+      
+      // Menangani format response Laravel (kadang dibungkus 'data', kadang langsung array)
+      const dataProduk = response.data.data ? response.data.data : response.data;
+      
+      setProducts(dataProduk)
       setLoading(false)
     } catch (error) {
       console.error("Error fetching products:", error)
@@ -20,8 +41,8 @@ function App() {
   }
 
   // --- FUNGSI 2: Tambah ke Keranjang ---
-  const addToCart = (product) => {
-    // Cek apakah stok habis?
+  const addToCart = (product: Product) => {
+    // Cek stok
     if (product.stock <= 0) {
         alert("Stok barang ini habis!");
         return;
@@ -30,7 +51,7 @@ function App() {
     const exist = cart.find((item) => item.id === product.id)
 
     if (exist) {
-      // Cek apakah jumlah di keranjang melebihi stok tersedia?
+      // Cek apakah jumlah di keranjang melebihi stok?
       if (exist.qty >= product.stock) {
           alert("Stok tidak mencukupi!");
           return;
@@ -50,7 +71,7 @@ function App() {
     return cart.reduce((total, item) => total + (item.price * item.qty), 0)
   }
 
-  // --- FUNGSI 4: Checkout ke API ---
+  // --- FUNGSI 4: Checkout ke API Vercel ---
   const checkout = async () => {
     if (!confirm("Yakin ingin memproses transaksi ini?")) return;
     setLoading(true); 
@@ -61,8 +82,8 @@ function App() {
         items: cart 
       };
 
-      // Kirim ke Backend
-      await axios.post('http://127.0.0.1:8000/api/checkout', payload);
+      // Kirim ke Backend Vercel
+      await axios.post(`${API_URL}/checkout`, payload);
       
       // Jika sukses
       alert("✅ Transaksi Berhasil Disimpan!");
@@ -71,7 +92,7 @@ function App() {
       
     } catch (error) {
       console.error("Gagal checkout:", error);
-      alert("❌ Terjadi kesalahan! Pastikan server Laravel menyala.");
+      alert("❌ Terjadi kesalahan! Pastikan backend Vercel aktif.");
     } finally {
       setLoading(false); 
     }
@@ -90,11 +111,11 @@ function App() {
         <div className="col-md-8">
           <div className="card shadow-sm border-0">
             <div className="card-header bg-white">
-              <h4 className="fw-bold text-primary mb-0">🛒 Katalog Produk</h4>
+              <h4 className="fw-bold text-primary mb-0">🛒 Katalog Produk (Vercel)</h4>
             </div>
             <div className="card-body">
               {loading && products.length === 0 ? (
-                <div className="text-center p-5">Loading data...</div>
+                <div className="text-center p-5">Loading data dari server...</div>
               ) : (
                 <div className="row g-3">
                   {products.map((product) => (
@@ -105,8 +126,9 @@ function App() {
                         onClick={() => product.stock > 0 && addToCart(product)}
                       >
                         <div className="card-body text-center">
+                            {/* Handling Gambar: Jika null pakai placeholder */}
                             <img 
-                                src={product.image} 
+                                src={product.image || 'https://placehold.co/150x150?text=No+Image'} 
                                 className="img-fluid rounded mb-3" 
                                 style={{height: '100px', objectFit: 'contain'}} 
                                 alt={product.name} 
