@@ -29,7 +29,7 @@ Aplikasi ini dibangun menggunakan teknologi standar industri modern:
 
 ## 📸 Screenshot
 
-![Screenshot App](LINK_GAMBAR_SCREENSHOT_DISINI)
+![<img width="1919" height="958" alt="image" src="https://github.com/user-attachments/assets/221c5171-a3a0-4f06-9a36-500af44e7bc8" />](LINK_GAMBAR_SCREENSHOT_DISINI)
 
 ---
 
@@ -45,7 +45,7 @@ npm install
 **2. Setup Environment:**
 Buat file `.env` dan masukkan link API:
 \`\`\`env
-VITE_API_BASE_URL=https://[LINK_VERCEL_BACKEND_KAMU]/api
+VITE_API_BASE_URL=https://server-pos-blue.vercel.app/api
 \`\`\`
 
 **3. Jalankan Aplikasi:**
