@@ -29,7 +29,8 @@ Aplikasi ini dibangun menggunakan teknologi standar industri modern:
 
 ## 📸 Screenshot
 
-![Desktop](<img width="1919" height="958" alt="image" src="https://github.com/user-attachments/assets/f14ba663-9aa3-425a-8e6a-9a19bd96ea75" />)
+![Desktop](https://github.com/user-attachments/assets/f14ba663-9aa3-425a-8e6a-9a19bd96ea75)
+![Mobile](https://github.com/user-attachments/assets/0bf284a2-c28d-4a21-856d-3ba27237aa0a)
 
 ---
 
