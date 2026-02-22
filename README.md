@@ -1,29 +1,54 @@
-# 🛍️ Point of Sales (POS) - Frontend
+# 🛒 Fullstack POS (Point of Sale) System
 
-Frontend aplikasi kasir modern yang dibangun menggunakan **React.js (Vite)**. Aplikasi ini berfungsi sebagai antarmuka kasir untuk memilih produk, mengelola keranjang belanja, dan memproses transaksi secara real-time.
+Sebuah aplikasi kasir modern berbasis web yang memisahkan arsitektur Frontend dan Backend secara rapi (*Decoupled Architecture*). Aplikasi ini dirancang untuk menangani transaksi secara *real-time*, mengelola stok produk otomatis, dan siap diakses dari berbagai perangkat (Responsive).
 
-## ⚡ Tech Stack
-- **Framework:** React.js + Vite
-- **Styling:** Bootstrap 5
-- **HTTP Client:** Axios
-- **State Management:** React Hooks (useState, useEffect)
+🚀 **Live Demo:** [https://client-pos-eta.vercel.app/]
 
-## 📸 Fitur Utama
-- **Katalog Produk Interaktif:** Menampilkan produk dengan gambar dan stok live dari database.
-- **Smart Cart System:**
-  - Tambah barang ke keranjang dengan satu klik.
-  - Otomatis menggabungkan item yang sama (update quantity).
-  - Kalkulasi total harga otomatis.
-- **Transaksi Real-time:** Terintegrasi langsung dengan Laravel Backend API.
+---
 
-## 🚀 Cara Menjalankan (Local)
+## 🛠️ Tech Stack & Arsitektur
 
-1. **Clone Repository**
-   ```bash
-   git clone [https://github.com/JeffryNaibaho/client-pos.git](https://github.com/JeffryNaibaho/client-pos.git)
-   cd client-pos
-2. **Install Dependencies**
-   npm install
-3. **Jalankan Server Development**
-   npm run dev
-   
+Aplikasi ini dibangun menggunakan teknologi standar industri modern:
+
+* **Frontend:** React.js (dengan Vite) + TypeScript + Bootstrap
+* **Backend / API:** Laravel 11 (PHP)
+* **Database:** PostgreSQL (Neon DB Serverless)
+* **Deployment:** Vercel (Frontend & Backend Serverless)
+
+---
+
+## ✨ Fitur Utama
+
+- [x] **Katalog Produk Dinamis:** Menampilkan daftar produk beserta gambar dan detail harga dari REST API.
+- [x] **Manajemen Keranjang (Cart):** Validasi stok otomatis saat memasukkan barang ke keranjang.
+- [x] **Sistem Checkout Aman:** Mengirim *payload* transaksi ke Backend menggunakan *Database Transaction* yang solid (ACID compliant).
+- [x] **Auto-Update Stok:** Stok barang langsung berkurang secara *real-time* di *database* pasca transaksi.
+- [x] **CORS & Serverless Ready:** Backend sudah dikonfigurasi untuk menangani *cross-origin requests* dan berjalan di lingkungan *Read-Only Serverless* (Vercel).
+
+---
+
+## 📸 Screenshot
+
+![Screenshot App](LINK_GAMBAR_SCREENSHOT_DISINI)
+
+---
+
+## ⚙️ Cara Menjalankan di Localhost
+
+Jika Anda ingin menjalankan project ini di komputer lokal:
+
+**1. Clone Repository & Install Dependencies:**
+\`\`\`bash
+npm install
+\`\`\`
+
+**2. Setup Environment:**
+Buat file `.env` dan masukkan link API:
+\`\`\`env
+VITE_API_BASE_URL=https://[LINK_VERCEL_BACKEND_KAMU]/api
+\`\`\`
+
+**3. Jalankan Aplikasi:**
+\`\`\`bash
+npm run dev
+\`\`\`
